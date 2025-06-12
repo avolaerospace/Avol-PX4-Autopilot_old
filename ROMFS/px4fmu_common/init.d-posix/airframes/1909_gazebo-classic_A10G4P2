@@ -1,0 +1,231 @@
+#!/bin/sh
+#
+# @name Quadrotor + Tailsitter
+#
+# @type VTOL Quad Tailsitter
+#
+. ${R}etc/init.d/rc.vtol_defaults
+param set-default MAV_TYPE 23
+#
+param set SYS_AUTOSTART 13200
+param set CBRK_AIRSPD_CHK 162128
+param set CBRK_GPSFAIL 240024
+param set CBRK_IO_SAFETY 22027
+param set CBRK_VELPOSERR 249916
+param set CBRK_ENGINEFAIL 284953
+param set CBRK_FLIGHTTERM 121212
+param set-default CA_AIRFRAME 4
+##
+param set-default CA_ROTOR_COUNT 6
+param set-default BAT1_N_CELLS 6
+param set-default MOT_POLE_COUNT 14
+
+#
+param set-default CA_ROTOR0_PX 0.25
+param set-default CA_ROTOR0_PY 0.214
+param set-default CA_ROTOR0_PZ 0.076
+param set-default CA_ROTOR0_KM 0.021
+param set-default CA_ROTOR0_CT 26
+param set-default CA_ROTOR0_AX = -0.1228
+param set-default CA_ROTOR0_AY = 0.1228
+param set-default CA_ROTOR0_AZ = -0.9848
+
+#
+param set-default CA_ROTOR1_PX -0.25
+param set-default CA_ROTOR1_PY -0.214
+param set-default CA_ROTOR1_PZ 0.076
+param set-default CA_ROTOR1_KM 0.021
+param set-default CA_ROTOR1_CT 26
+param set-default CA_ROTOR1_AX = 0.1228
+param set-default CA_ROTOR1_AY = -0.1228
+param set-default CA_ROTOR1_AZ = -0.9848
+
+#
+param set-default CA_ROTOR2_PX 0.25
+param set-default CA_ROTOR2_PY -0.214
+param set-default CA_ROTOR2_PZ 0.076
+param set-default CA_ROTOR2_KM -0.021
+param set-default CA_ROTOR2_CT 26
+param set-default CA_ROTOR2_AX = -0.1228
+param set-default CA_ROTOR2_AY = -0.1228
+param set-default CA_ROTOR2_AZ = -0.9848
+
+#
+param set-default CA_ROTOR3_PX -0.25
+param set-default CA_ROTOR3_PY 0.214
+param set-default CA_ROTOR3_PZ 0.076
+param set-default CA_ROTOR3_KM -0.021
+param set-default CA_ROTOR3_CT 26
+param set-default CA_ROTOR3_AX = 0.1228
+param set-default CA_ROTOR3_AY = 0.1228
+param set-default CA_ROTOR3_AZ = -0.9848
+
+#
+param set-default CA_ROTOR4_PX 0
+param set-default CA_ROTOR4_PY 0.134
+param set-default CA_ROTOR4_PZ 0.285
+param set-default CA_ROTOR4_KM 0.021
+param set-default CA_ROTOR4_CT 26
+param set-default CA_ROTOR4_AX = 0
+param set-default CA_ROTOR4_AY = 0
+param set-default CA_ROTOR4_AZ = -1
+#
+param set-default CA_ROTOR5_PX 0
+param set-default CA_ROTOR5_PY -0.134
+param set-default CA_ROTOR5_PZ 0.285
+param set-default CA_ROTOR5_KM -0.021
+param set-default CA_ROTOR5_CT 26
+param set-default CA_ROTOR5_AX = 0
+param set-default CA_ROTOR5_AY = 0
+param set-default CA_ROTOR5_AZ = -1
+
+
+
+##
+param set-default CA_SV_CS_COUNT 2
+param set-default CA_SV_CS0_TRQ_Y 0.5
+param set-default CA_SV_CS0_TRQ_P -0.5
+param set-default CA_SV_CS0_TYPE 5
+param set-default CA_SV_CS1_TRQ_Y -0.5
+param set-default CA_SV_CS1_TRQ_P -0.5
+param set-default CA_SV_CS1_TYPE 6
+#param set-default PWM_MAIN_REV 192
+# param set-default CA_SV_TL0_MAXA 30
+# param set-default CA_SV_TL0_MINA 30
+# param set-default CA_SV_TL1_MAXA 30
+# param set-default CA_SV_TL1_MINA 30
+# param set-default CA_SV_TL0_TD 90
+# param set-default CA_SV_TL1_TD 90
+param set-default PWM_MAIN_FUNC1 101
+param set-default PWM_MAIN_FUNC2 102
+param set-default PWM_MAIN_FUNC3 103
+param set-default PWM_MAIN_FUNC4 104
+param set-default PWM_MAIN_FUNC5 105
+param set-default PWM_MAIN_FUNC6 106
+param set-default PWM_MAIN_FUNC7 201
+param set-default PWM_MAIN_FUNC8 202
+# param set-default PWM_MAIN_MIN7 1400 ## ADDED Aug26
+# #param set-default PWM_MAIN_MAX7 1600 ## ADDED Aug26
+# param set-default PWM_MAIN_MIN8 1400 ## ADDED Aug26
+# param set-default PWM_MAIN_MAX8 1600 ## ADDED Aug26
+parm set-default FD_FAIL_R 70
+#param set-default FW_P_TC 0.4 ####s#####
+#pitch
+param set-default FW_PR_FF 0.8 # 0.1
+param set-default FW_PR_P 0.1 # 1.2
+param set-default FW_PR_I 0.01 # 0.3
+param set-default FW_PR_D 0
+# roll
+param set-default FW_RR_FF 0.8 # 0.1  0.8
+param set-default FW_RR_P 0.1 # 0.25 ######### 2.7
+param set-default FW_RR_I 0.01 # 0.8
+param set-default FW_RR_D 0 #########
+param set-default FW_R_RMAX 50 ##?????????? ---> 50
+#yaw
+param set-default FW_YR_FF 0.0 # 0 make yaw rate controller very weak, only keep default P#############
+#param set-default FW_YR_P 0.5 #0.15 ###########
+param set-default FW_YR_I 0.1
+param set-default FW_YR_D 0
+param set-default FW_Y_RMAX 50
+
+param set-default FW_PSP_OFF 0
+
+param set-default FW_THR_MAX 1 # 1
+#param set-default FW_THR_MIN 0.2 ###########
+param set-default FW_T_CLMB_MAX 5
+param set-default FW_T_HRATE_FF 0.3
+param set-default FW_T_SINK_MAX 3
+param set-default FW_T_SINK_MIN 2
+param set-default FW_AIRSPD_STALL 20 #########
+param set-default FW_AIRSPD_MIN 21
+param set-default FW_AIRSPD_TRIM 24 #########
+param set-default FW_AIRSPD_MAX 33
+param set-default MC_AIRMODE 0
+param set-default MAN_ARM_GESTURE 0.3 # required for yaw airmode
+param set-default MC_ROLL_P 3
+param set-default MC_PITCH_P 5.5
+param set-default MC_ROLLRATE_P 0.259999990463256836
+param set-default MC_PITCHRATE_P 0.150000005960464478
+param set-default VT_ARSP_TRANS 16
+#param set-default VT_B_TRANS_DUR 9 ########
+#param set-default VT_F_TRANS_DUR 8 #########
+param set-default VT_TYPE 0
+param set-default WV_EN 0
+param set-default FW_WING_SPAN 1.5
+param set-default FW_R_LIM 50
+param set-default FW_THR_TRIM 0.15 ####
+
+
+# This is a test from August 5th. Matching real data values with sim
+# parameters in order to find a golden center for control
+
+# param set-default ASPD_BETA_NOISE 0.1499936
+ param set-default ASPD_FS_T_STOP 2
+ param set-default ASPD_TAS_GATE 4
+ param set-default ASPD_WIND_NSD 0.1
+
+ param set-default EKF2_ARSP_THR 10
+ param set-default EKF2_DECL_TYPE 3
+ param set-default EKF2_GPS_DELAY 10
+ param set-default EKF2_GPS_V_NOISE 0.5
+ param set-default EKF2_IMU_CTRL 3
+# # N/A param set-default EKF2_MAG_YAWLIM 0.2
+param set-default EKF2_MULTI_IMU 0
+param set-default EKF2_REQ_GPS_H 10
+param set-default EKF2_TAS_GATE 3
+# # N/A param set-default EKF2_TERR_MASK 3
+param set-default EKF2_WIND_NSD 0.01
+# # N/A param set-default EV_TSK_RC_LOSS
+# # N/A param set-default EV_TSK_STAT_DIS
+
+# param set-default FW_AIRSPD_STALL 15
+# param set-default FW_AIRSPD_TRIM 20
+# # N/A param set-default FW_ARSP_MODE
+param set-default FW_GND_SPD_MIN 5
+param set-default FW_MAN_P_MAX 20
+param set-default FW_MAN_R_MAX 45
+param set-default FW_PN_R_SLEW_MAX 30 ######## ????
+param set-default FW_P_LIM_MAX 20
+param set-default FW_P_LIM_MIN -20
+param set-default FW_P_TC 0.6
+#param set-default FW_RR_D 0.15 # 0.005
+param set-default FW_RR_IMAX 0.2
+#param set-default FW_RR_P 5.1 # 0.05
+
+ ##
+param set-default FW_THR_MIN 0.2
+param set-default FW_THR_TRIM 0.44
+param set-default FW_WR_IMAX 0.4 #what is it
+param set-default FW_YR_FF 0.2 # 0.2
+#param set-default FW_YR_P 0.5
+param set-default VT_ARSP_BLEND 8
+# # N/A param set-default VT_B_DEC_FF
+param set-default VT_B_DEC_MSS 2
+param set-default VT_B_TRANS_DUR 9
+param set-default VT_FW_DIFTHR_EN 1
+
+param set-default VT_FW_DIFTHR_S_R 0 ## ROLL... TURNING DOWN. Was 1
+param set-default VT_FW_DIFTHR_S_P 0
+param set-default VT_FW_DIFTHR_S_Y 1
+
+param set-default VT_F_TRANS_DUR 8
+param set-default VT_TRANS_MIN_TM 2
+param set-default VT_ELEV_MC_LOCK 1
+param set-default WEIGHT_BASE 5
+param set-default WEIGHT_GROSS 5
+param set-default WV_EN 0
+
+param set-default FW_THR_SLEW_MAX 0.5 ####### ???????
+param set-default FW_WR_P 0.5
+param set-default NAV_ACC_RAD 10
+param set-default NPFG_DAMPING 0.75
+param set-default NPFG_PERIOD 21
+#param set-default NPFG_ROLL_TC 0.9
+# -t 192.168.64.1 -f into PX4-Autopilot/build/px4_sitl_default/etc/init.d-posix/px4-rc.mavlink
+param set-default VT_F_TRANS_THR 0.7
+param set-default VT_TRANS_TIMEOUT 15
+
+param set-default MPC_THR_MIN 0.12
+param set-default MPC_THR_MAX 1
+param set-default MPC_THR_HOVER 0.5
+param set-default MC_YAWRATE_MAX 50

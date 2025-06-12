@@ -1,0 +1,196 @@
+#!/bin/sh
+#
+# @name Quadrotor + Tailsitter
+#
+# @type VTOL Quad Tailsitter
+#
+
+. ${R}etc/init.d/rc.vtol_defaults
+
+
+param set-default MAV_TYPE 20
+#
+param set SYS_AUTOSTART 13200
+param set CBRK_AIRSPD_CHK 162128
+param set CBRK_GPSFAIL 240024
+param set CBRK_IO_SAFETY 22027
+param set CBRK_VELPOSERR 249916
+param set CBRK_ENGINEFAIL 284953
+param set CBRK_FLIGHTTERM 121212
+
+
+param set-default CA_AIRFRAME 4
+
+param set-default CA_ROTOR_COUNT 6
+
+param set-default CA_ROTOR0_PX 0.44
+param set-default CA_ROTOR0_PY 0.3
+param set-default CA_ROTOR0_KM 0.03
+
+param set-default CA_ROTOR1_PX -0.42
+param set-default CA_ROTOR1_PY -0.3
+param set-default CA_ROTOR1_KM 0.03
+
+param set-default CA_ROTOR2_PX 0.44
+param set-default CA_ROTOR2_PY -0.3
+param set-default CA_ROTOR2_KM -0.03
+
+param set-default CA_ROTOR3_PX -0.42
+param set-default CA_ROTOR3_PY 0.3
+param set-default CA_ROTOR3_KM -0.03
+
+param set-default CA_ROTOR4_PX 0
+param set-default CA_ROTOR4_PY 0.28
+param set-default CA_ROTOR4_KM 0.03
+
+param set-default CA_ROTOR5_PX 0
+param set-default CA_ROTOR5_PY -0.28
+param set-default CA_ROTOR5_KM -0.03
+
+param set-default CA_SV_CS_COUNT 2
+
+param set-default CA_SV_CS0_TRQ_Y 0.5
+param set-default CA_SV_CS0_TRQ_P -0.5
+param set-default CA_SV_CS0_TYPE 5
+param set-default CA_SV_CS1_TRQ_Y -0.5
+param set-default CA_SV_CS1_TRQ_P -0.5
+param set-default CA_SV_CS1_TYPE 6
+
+param set-default PWM_MAIN_FUNC1 101
+param set-default PWM_MAIN_FUNC2 102
+param set-default PWM_MAIN_FUNC3 103
+param set-default PWM_MAIN_FUNC4 104
+param set-default PWM_MAIN_FUNC5 105
+param set-default PWM_MAIN_FUNC6 106
+param set-default PWM_MAIN_FUNC7 201
+param set-default PWM_MAIN_FUNC8 202
+
+parm set-default FD_FAIL_R 70
+
+param set-default FW_P_TC 0.4
+
+#pitch
+param set-default FW_PR_FF 0.8 # 0.1
+param set-default FW_PR_P 0.1 # 1.2
+param set-default FW_PR_I 0.01 # 0.3
+param set-default FW_PR_D 0
+
+
+# roll
+param set-default FW_RR_FF 0.8 # 0.1  0.8
+param set-default FW_RR_P 0.1 # 0.25 ######### 2.7
+param set-default FW_RR_I 0.01 # 0.8
+param set-default FW_RR_D 0 #########
+param set-default FW_R_RMAX 50 ##?????????? ---> 50
+#yaw
+param set-default FW_YR_FF 0.0 # 0 make yaw rate controller very weak, only keep default P
+param set-default FW_YR_P 0.15 #0.15
+param set-default FW_YR_I 0.1
+param set-default FW_YR_D 0
+param set-default FW_Y_RMAX 50
+
+param set-default FW_PSP_OFF 0
+
+param set-default FW_THR_TRIM 0.44
+param set-default FW_THR_MAX 1 # 1
+param set-default FW_THR_MIN 0.3
+param set-default FW_T_CLMB_MAX 5
+param set-default FW_T_HRATE_FF 0.3
+param set-default FW_T_SINK_MAX 3
+param set-default FW_T_SINK_MIN 2
+
+param set-default FW_AIRSPD_STALL 21
+param set-default FW_AIRSPD_MIN 25
+param set-default FW_AIRSPD_TRIM 30
+param set-default FW_AIRSPD_MAX 35
+
+
+
+
+
+param set-default MC_AIRMODE 0
+param set-default MAN_ARM_GESTURE 0.3 # required for yaw airmode
+
+#RATE CONTROLLERS
+# #Pitch Rate MC
+# param set-default MC_PITCHRATE_K
+# param set-default MC_PITCHRATE_P
+# param set-default MC_PITCHRATE_I
+# param set-default MC_PITCHRATE_D
+
+
+# #Roll Rate MC
+# param set-default MC_ROLLRATE_K
+# param set-default MC_ROLLRATE_P
+# param set-default MC_ROLLRATE_I
+# param set-default MC_ROLLRATE_D
+
+# # YAW RATE MC
+# param set-default MC_YAWRATE_K
+# param set-default MC_YAWRATE_P
+# param set-default MC_YAWRATE_I
+# param set-default MC_YAWRATE_D
+
+
+# #ATTITUDE CONTROLLER
+# # PITCH
+# param set-default MC_PITCHRATE_MAX
+# param set-default MC_PITCH_P
+
+# #ROLL
+# param set-default MC_ROLLRATE_MAX
+# param set-default MC_ROLL_P
+
+# #YAW
+# param set-default MC_YAWRATE_MAX
+# param set-default MC_YAW_P
+
+
+
+
+
+
+
+param set-default MC_ROLL_P 4.32 #3
+param set-default MC_PITCH_P 5.57 #5.5
+param set-default MC_ROLLRATE_P 0.221 #0.259999990463256836
+param set-default MC_PITCHRATE_P 0.196 #0.150000005960464478
+
+
+param set-default MC_PITCHRATE_D 0.0054
+param set-default MC_PITCHRATE_I 0.275
+param set-default MC_PITCHRATE_P 0.196
+
+# param set-default MC_PITCH_P 4.88
+# param set-default MC_ROLLRATE_D 0.0062
+# param set-default MC_ROLLRATE_I 0.175
+# param set-default MC_ROLLRATE_P 1.9
+# param set-default MC_ROLL_P 3.4
+
+
+# param set-default MC_YAWRATE_D 0
+# param set-default MC_YAWRATE_I 0.17
+# param set-default MC_YAWRATE_P 0
+# param set-default MC_YAW_P 6.16
+
+
+
+
+
+param set-default VT_ARSP_TRANS 16
+param set-default VT_B_TRANS_DUR 14
+
+param set-default VT_FW_DIFTHR_EN 1
+
+param set-default VT_FW_DIFTHR_S_R 0 ## ROLL... TURNING DOWN. Was 1
+param set-default VT_FW_DIFTHR_S_P 0
+param set-default VT_FW_DIFTHR_S_Y 1
+
+param set-default VT_F_TRANS_DUR 8
+param set-default VT_TYPE 0
+
+param set-default WV_EN 1
+param set-default FW_WING_SPAN 2.5
+
+param set-default WEIGHT_BASE 25
+param set-default WEIGHT_GROSS 25

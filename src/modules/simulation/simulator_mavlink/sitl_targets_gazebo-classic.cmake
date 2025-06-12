@@ -94,6 +94,10 @@ if(gazebo_FOUND)
 		px4vision
 		quadtailsitter
 		r1_rover
+		A10G
+		A10H
+		A10G6
+		A10G4P2
 		rover
 		standard_vtol
 		standard_vtol_drop
