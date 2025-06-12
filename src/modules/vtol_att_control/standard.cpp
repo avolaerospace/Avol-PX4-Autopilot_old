@@ -246,6 +246,7 @@ void Standard::update_transition_state()
 		if (_v_control_mode->flag_control_climb_rate_enabled) {
 			// control backtransition deceleration using pitch.
 			pitch_body = Eulerf(Quatf(_mc_virtual_att_sp->q_d)).theta();
+			PX4_WARN("control_climb_rate flag is enabled!")
 		}
 
 		const Quatf q_sp(Eulerf(roll_body, pitch_body, yaw_body));
@@ -258,6 +259,7 @@ void Standard::update_transition_state()
 		if (_param_vt_b_trans_ramp.get() > FLT_EPSILON) {
 			mc_weight = _time_since_trans_start / _param_vt_b_trans_ramp.get();
 		}
+		PX4_INFO("vtol_att_control increased mc attitude control")
 	}
 
 	mc_weight = math::constrain(mc_weight, 0.0f, 1.0f);

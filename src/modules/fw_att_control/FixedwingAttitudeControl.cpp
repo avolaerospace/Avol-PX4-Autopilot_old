@@ -113,6 +113,7 @@ FixedwingAttitudeControl::vehicle_manual_poll(const float yaw_body)
 				_att_sp.timestamp = hrt_absolute_time();
 
 				_attitude_sp_pub.publish(_att_sp);
+				PX4_INFO("fw_att_control updated attitude setpoint (Stabilized mode)")
 			}
 		}
 	}
@@ -380,6 +381,7 @@ void FixedwingAttitudeControl::Run()
 					_rates_sp.timestamp = hrt_absolute_time();
 
 					_rate_sp_pub.publish(_rates_sp);
+					PX4_Info("fw_att_control published rate setpoints (normal?)")
 				}
 			}
 

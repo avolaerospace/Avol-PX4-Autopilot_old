@@ -364,6 +364,7 @@ MulticopterAttitudeControl::Run()
 			rates_setpoint.timestamp = hrt_absolute_time();
 
 			_vehicle_rates_setpoint_pub.publish(rates_setpoint);
+			PX4_INFO("mc_att_control published rate setpoints");
 
 		} else {
 			_man_roll_input_filter.reset(0.f);
