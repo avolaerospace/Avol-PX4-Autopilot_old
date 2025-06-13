@@ -1,0 +1,54 @@
+notes:
+
+	CS locked
+During hover:
+mc_pos publishes attitude setpoints
+mc_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+during forward transition:
+mc_pos publishes attitude setpoints
+mc_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+During FW Flight:
+fw_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+During detransition:
+vtol_att publishes attitude setpoints
+mc_pos published attitude setpoints
+mc_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+During Hover (again):
+mc_pos publishes attitude setpoints
+mc_Att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+-------------------------------
+	CS unlocked
+During hover:
+mc_pos publishes attitude setpoints
+mc_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+during forward transition:
+mc_pos publishes attitude setpoints
+mc_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+During FW Flight:
+fw_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+During detransition:
+vtol_att publishes attitude setpoints
+mc_pos published attitude setpoints
+mc_att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints
+
+During Hover (again):
+mc_pos publishes attitude setpoints
+mc_Att publishes rate setpoints
+fw_rate publishes torque/thrust setpoints

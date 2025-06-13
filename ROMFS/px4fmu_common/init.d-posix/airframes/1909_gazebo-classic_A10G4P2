@@ -210,7 +210,7 @@ param set-default VT_FW_DIFTHR_S_Y 1
 
 param set-default VT_F_TRANS_DUR 8
 param set-default VT_TRANS_MIN_TM 2
-param set-default VT_ELEV_MC_LOCK 1
+param set-default VT_ELEV_MC_LOCK 0
 param set-default WEIGHT_BASE 5
 param set-default WEIGHT_GROSS 5
 param set-default WV_EN 0
