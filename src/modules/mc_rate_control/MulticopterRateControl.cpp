@@ -263,6 +263,8 @@ MulticopterRateControl::Run()
 			vehicle_torque_setpoint.timestamp = hrt_absolute_time();
 			_vehicle_torque_setpoint_pub.publish(vehicle_torque_setpoint);
 
+			PX4_INFO("MC_RATE published torque/thrust setpoints.");
+
 			updateActuatorControlsStatus(vehicle_torque_setpoint, dt);
 
 		}
