@@ -321,8 +321,32 @@ void Tailsitter::fill_actuator_outputs()
 		}
 
 		_torque_setpoint_0->xyz[0] = _vehicle_torque_setpoint_virtual_mc->xyz[0];
-		_torque_setpoint_0->xyz[1] = _vehicle_torque_setpoint_virtual_mc->xyz[1];
-		_torque_setpoint_0->xyz[2] = _vehicle_torque_setpoint_virtual_mc->xyz[2];
+		_torque_setpoint_0->xyz[1] = (_vehicle_torque_setpoint_virtual_mc->xyz[1]);
+		_torque_setpoint_0->xyz[2] = (_vehicle_torque_setpoint_virtual_mc->xyz[2]);
+
+		if (_vtol_mode == vtol_mode::TRANSITION_BACK){
+
+			float rollScale = _torque_setpoint_0->xyz[0]; //import values to labeled variables
+			float yawScale = _torque_setpoint_0->xyz[2];
+			float YawRollMag = sqrtf((rollScale*rollScale) + (yawScale*yawScale)); //Magnitude (root sum squares)
+
+			float YawRollBlendStart = 0.08f; // Yaw+Roll magnitude at which the scaling starts
+			float YawRollBlendEnd = 0.15f; //  Maximum Yaw+Roll magnitude at which the scale reaches the lowest value
+			float YawRollBlend = (YawRollMag-YawRollBlendStart) / (YawRollBlendEnd-YawRollBlendStart); // Input to mapping function (0 to 1)
+
+			float scalieMin = 0.3f;
+			float scalie = math::constrain(1.0f-(scalieMin*YawRollBlend),scalieMin,1.f); //clamped linear ramp function to map blend to a scale value, (current min of 0.3)
+										 	   	     // starts at 1 and decreases linearly to .3
+			//PX4_INFO("Current YawRollMag is %.3f : Current Pitch Scale is %.3f",(double)YawRollMag,(double)scalie);
+			_torque_setpoint_0->xyz[1] = (_vehicle_torque_setpoint_virtual_mc->xyz[1])*scalie;
+			_torque_setpoint_0->xyz[2] = (_vehicle_torque_setpoint_virtual_mc->xyz[2]); //we only scale pitch down, not yaw
+
+			//Scale pitch and yaw setpoints down to 0 at the start of detransition and slowly ramp them back to 1 over the transition
+			float scalie2 = math::min(math::constrain((_time_since_trans_start / _param_vt_b_trans_dur.get())*(_time_since_trans_start / _param_vt_b_trans_dur.get()), 0.f, 1.f),1.0f);
+			_torque_setpoint_0->xyz[1]*= scalie2;
+			_torque_setpoint_0->xyz[2]*= scalie2;
+			//PX4_INFO("Current pitch torque setpoint value is: %.2f : And current progress value is: %.2f",(double)(_torque_setpoint_0->xyz[1])*(double)100.f,(double)scalie);
+		}
 	}
 
 	// Control surfaces
