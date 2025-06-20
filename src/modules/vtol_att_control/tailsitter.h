@@ -55,7 +55,7 @@ static constexpr float PITCH_THRESHOLD_AUTO_TRANSITION_TO_FW = -1.05f; // -60°
 static constexpr float PITCH_THRESHOLD_AUTO_TRANSITION_TO_MC = -0.26f; // -15°
 
 // [s] Thrust blending duration from fixed-wing to back transition throttle
-static constexpr float B_TRANS_THRUST_BLENDING_DURATION = 0.5f;
+static constexpr float B_TRANS_THRUST_BLENDING_DURATION = 2.0f;
 
 class Tailsitter : public VtolType
 {
