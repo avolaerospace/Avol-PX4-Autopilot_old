@@ -259,7 +259,7 @@ void Standard::update_transition_state()
 		if (_param_vt_b_trans_ramp.get() > FLT_EPSILON) {
 			mc_weight = _time_since_trans_start / _param_vt_b_trans_ramp.get();
 		}
-		PX4_INFO("vtol_att_control increased mc attitude control");
+		//PX4_INFO("vtol_att_control increased mc attitude control");
 	}
 
 	mc_weight = math::constrain(mc_weight, 0.0f, 1.0f);

@@ -404,7 +404,7 @@ VtolAttitudeControl::Run()
 			if (mc_att_sp_updated || fw_att_sp_updated) {
 				_vtol_type->update_transition_state();
 				_vehicle_attitude_sp_pub.publish(_vehicle_attitude_sp);
-				PX4_INFO("vtol_Att_control published vehicle attitude setpoints during detransition");
+				//PX4_INFO("vtol_Att_control published vehicle attitude setpoints during detransition");
 			}
 
 			break;

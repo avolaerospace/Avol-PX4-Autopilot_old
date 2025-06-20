@@ -438,7 +438,7 @@ void FixedwingRateControl::Run()
 				_vehicle_torque_setpoint.timestamp_sample = angular_velocity.timestamp_sample;
 				_vehicle_torque_setpoint_pub.publish(_vehicle_torque_setpoint);
 
-				PX4_INFO("fw_rate_control updated torque/thrust setpoints (with enabled flight modes active)");
+				//PX4_INFO("fw_rate_control updated torque/thrust setpoints (with enabled flight modes active)");
 			}
 		}
 
