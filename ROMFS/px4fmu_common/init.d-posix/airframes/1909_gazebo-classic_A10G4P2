@@ -128,7 +128,7 @@ param set-default FW_YR_I 0.1
 param set-default FW_YR_D 0
 param set-default FW_Y_RMAX 50
 
-param set-default FW_PSP_OFF 0
+param set-default FW_PSP_OFF 1.5
 
 param set-default FW_THR_MAX 1 # 1
 #param set-default FW_THR_MIN 0.2 ###########
@@ -137,8 +137,8 @@ param set-default FW_T_HRATE_FF 0.3
 param set-default FW_T_SINK_MAX 3
 param set-default FW_T_SINK_MIN 2
 param set-default FW_AIRSPD_STALL 20 #########
-param set-default FW_AIRSPD_MIN 21
-param set-default FW_AIRSPD_TRIM 24 #########
+param set-default FW_AIRSPD_MIN 24
+param set-default FW_AIRSPD_TRIM 38 #########
 param set-default FW_AIRSPD_MAX 33
 param set-default MC_AIRMODE 0
 param set-default MAN_ARM_GESTURE 0.3 # required for yaw airmode
@@ -146,16 +146,18 @@ param set-default MC_ROLL_P 3
 param set-default MC_PITCH_P 5.5
 param set-default MC_ROLLRATE_P 0.259999990463256836
 param set-default MC_PITCHRATE_P 0.150000005960464478
-param set-default VT_ARSP_TRANS 16
+param set-default VT_ARSP_TRANS 24
 #param set-default VT_B_TRANS_DUR 9 ########
 #param set-default VT_F_TRANS_DUR 8 #########
 param set-default VT_TYPE 0
 param set-default WV_EN 0
 param set-default FW_WING_SPAN 1.5
 param set-default FW_R_LIM 50
-param set-default FW_THR_TRIM 0.15 ####
+param set-default FW_THR_TRIM 0.10 ####
+param set-default FW_THR_ASPD_MIN 0.1
 
 
+param set-default FW_T_RLL2THR 10
 # This is a test from August 5th. Matching real data values with sim
 # parameters in order to find a golden center for control
 
@@ -211,15 +213,26 @@ param set-default VT_FW_DIFTHR_S_Y 1
 param set-default VT_F_TRANS_DUR 8
 param set-default VT_TRANS_MIN_TM 2
 param set-default VT_ELEV_MC_LOCK 0
-param set-default WEIGHT_BASE 5
-param set-default WEIGHT_GROSS 5
+param set-default WEIGHT_BASE 8.7
+param set-default WEIGHT_GROSS 8.7
 param set-default WV_EN 0
 
 param set-default FW_THR_SLEW_MAX 0.5 ####### ???????
 param set-default FW_WR_P 0.5
-param set-default NAV_ACC_RAD 10
+
+#NPFG v1.16
 param set-default NPFG_DAMPING 0.75
+param set-default NPFG_LB_PERIOD 1
+param set-default NAV_ACC_RAD 10
 param set-default NPFG_PERIOD 21
+param set-default NPFG_PERIOD_SF 1.5
+param set-default NPFG_ROLL_TC 0.8
+param set-default NPFG_SW_DST_MLT 0.32
+
+# param set-default NAV_FW_ALT_RAD 100
+
+
+
 #param set-default NPFG_ROLL_TC 0.9
 # -t 192.168.64.1 -f into PX4-Autopilot/build/px4_sitl_default/etc/init.d-posix/px4-rc.mavlink
 param set-default VT_F_TRANS_THR 0.7
