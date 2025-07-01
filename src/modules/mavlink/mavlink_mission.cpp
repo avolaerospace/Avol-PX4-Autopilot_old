@@ -499,9 +499,9 @@ MavlinkMissionManager::send()
 		return;
 	}
 
-	mission_result_s mission_result{};
 
-	if (_mission_result_sub.update(&mission_result)) {
+	if (_mission_result_data.update()) {
+		const mission_result_s &mission_result = _mission_result_data.get();
 
 		if (_current_seq != mission_result.seq_current) {
 
@@ -1925,11 +1925,7 @@ MavlinkMissionManager::update_mission_state()
 	}
 
 	// Get mission result
-	mission_result_s mission_result;
-
-	if (!_mission_result_sub.update(&mission_result)) {
-		return;
-	}
+	const mission_result_s &mission_result = _mission_result_data.get();
 
 	// Update mission mode
 	if (vehicle_status.nav_state == vehicle_status_s::NAVIGATION_STATE_AUTO_MISSION ||
@@ -1949,8 +1945,7 @@ MavlinkMissionManager::update_mission_state()
 		// Mission is complete if the navigator says it's finished
 		_mission_state = MISSION_STATE_COMPLETE;
 
-	} else if (_mission_mode == MISSION_MODE_ACTIVE
-		   && vehicle_status.arming_state == vehicle_status_s::ARMING_STATE_ARMED) {
+	} else if (_mission_mode == MISSION_MODE_ACTIVE) {
 		_mission_state = MISSION_STATE_ACTIVE;
 
 	} else if (_mission_mode == MISSION_MODE_SUSPENDED && _last_reached >= 0) {

@@ -107,8 +107,6 @@ private:
 
 	DatamanClient _dataman_client{};
 
-	void update_mission_state();
-
 	uint64_t		_time_last_recv{0};
 	uint64_t		_time_last_sent{0};
 
@@ -148,9 +146,11 @@ private:
 
 	static bool		_transfer_in_progress;			///< Global variable checking for current transmission
 
-	uORB::Subscription	_mission_result_sub{ORB_ID(mission_result)};
 	uORB::SubscriptionData<mission_s> 	_mission_sub{ORB_ID(mission)};
-	uORB::Subscription	_vehicle_status_sub{ORB_ID(vehicle_status)};	///< vehicle status subscription
+	uORB::SubscriptionData<mission_result_s> _mission_result_data{ORB_ID(mission_result)};
+	uORB::Subscription _vehicle_status_sub{ORB_ID(vehicle_status)};
+
+	uint8_t 		_nav_state;
 
 	uORB::Publication<mission_s>	_offboard_mission_pub{ORB_ID(mission)};
 
@@ -178,6 +178,9 @@ private:
 
 	/** get the crc32 checksum for the current _mission_type */
 	uint32_t get_current_mission_type_crc();
+
+	/** store mission_state according to MISSION_STATE MAVLink definitions */
+	void update_mission_state();
 
 	/* do not allow top copying this class */
 	MavlinkMissionManager(MavlinkMissionManager &);
