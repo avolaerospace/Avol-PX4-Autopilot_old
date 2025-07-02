@@ -74,6 +74,8 @@ bool FlightTaskTransition::updateInitialize()
 	_sub_position_sp_triplet.update();
 	return ret;
 }
+
+
 /*
 bool FlightTaskTransition::update()
 {
@@ -83,7 +85,6 @@ bool FlightTaskTransition::update()
 
 	// slowly move vertical velocity setpoint to zero
 	_velocity_setpoint(2) = _vel_z_filter.update(0.0f, _deltatime);
-	PX4_INFO("Back-transition climb rate: %.2f m/s", (double)_velocity_setpoint(2));
 
 	// calculate a horizontal acceleration vector which corresponds to an attitude composed of pitch up by _param_fw_psp_off
 	// and zero roll angle
@@ -99,22 +100,20 @@ bool FlightTaskTransition::update()
 
 	_yaw_setpoint = NAN;
 	return ret;
-}
-*/
+}*/
 
-/////////
+
 
 bool FlightTaskTransition::update()
 {
 	// tailsitters will override attitude and thrust setpoint
 	// tiltrotors and standard vtol will overrride roll and pitch setpoint but keep vertical thrust setpoint
 	bool ret = FlightTask::update();
-/////////////
 
 	// Identify back-transition (FW ➜ MC)
 	const auto &vs = _sub_vehicle_status.get();
 
-	/* back-transition = “in any transition” AND “not transitioning to FW” */
+	// back-transition = “in any transition” AND “not transitioning to FW” //
 	const bool back_transition = vs.in_transition_mode && !vs.in_transition_to_fw;
 
 	if (back_transition) {
@@ -130,17 +129,29 @@ bool FlightTaskTransition::update()
 
 		// ── 2. Turn Δh into a climb-rate command ───────────────────────
 		// Assume ~2 s remaining; constrain for safety.
-		const float climb_rate = math::constrain(dh / 4.f, 0.3f, 2.0f);
+		const float climb_rate = math::constrain(dh / 4.f, 0.3f, 9.0f);
 
-		// PX4_INFO("Back-transition climb rate: %.2f m/s", (double)climb_rate);
+		PX4_INFO("Back-transition climb rate: %.2f m/s", (double)climb_rate);
+												// LOG!!!!!!! Velocity setpoint in ALL X,Y and Z
 		// Negative Z in NED = climb
 		_velocity_setpoint(2) = _vel_z_filter.update(-climb_rate, _deltatime);
+		PX4_INFO("Back-trans: v_sp = [%.2f  %.2f  %.2f] m/s",
+			(double)_velocity_setpoint(0),
+			(double)_velocity_setpoint(1),
+			(double)_velocity_setpoint(2));
+
 
 	} else {
 		// All other phases: gently decay to zero vertical speed
 		_velocity_setpoint(2) = _vel_z_filter.update(0.0f, _deltatime);
+	          // print only first time we enter this path
+                PX4_INFO("1.this will execute during front transition or if B_transition custom fails  ‒ vertical speed damped, v_sp = [%.2f  %.2f  %.2f]",
+		(double)_velocity_setpoint(0),
+		(double)_velocity_setpoint(1),
+		(double)_velocity_setpoint(2));
+	//!!!! LOG ADD FAILSAFEE ACTIVATE AND LOG VELOCITY SETPOINT
 	}
-////////////////
+	////////////////
 	// calculate a horizontal acceleration vector which corresponds to an attitude composed of pitch up by _param_fw_psp_off
 	// and zero roll angle
 	float pitch_setpoint = math::radians(_param_fw_psp_off);
@@ -158,7 +169,6 @@ bool FlightTaskTransition::update()
 }
 
 
-/////////
 float FlightTaskTransition::computeBackTranstionPitchSetpoint()
 {
 	const Vector2f position_xy{_position};
