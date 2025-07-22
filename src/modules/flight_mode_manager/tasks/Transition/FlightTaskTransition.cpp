@@ -44,6 +44,7 @@ FlightTaskTransition::FlightTaskTransition()
 	param_get(param_find("FW_PSP_OFF"), &_param_fw_psp_off);
 	param_get(param_find("VT_B_DEC_I"), &_param_vt_b_dec_i);
 	param_get(param_find("VT_B_DEC_MSS"), &_param_vt_b_dec_mss);
+	param_get(param_find("VT_F_TRANS_DUR"), &_param_vt_f_trans_dur);   // add
 }
 
 bool FlightTaskTransition::activate(const trajectory_setpoint_s &last_setpoint)
@@ -59,9 +60,12 @@ bool FlightTaskTransition::activate(const trajectory_setpoint_s &last_setpoint)
 
 	if (_sub_vehicle_status.get().in_transition_to_fw) {
 		_gear.landing_gear = landing_gear_s::GEAR_UP;
+		_ft_elapsed_time = 0.f;
+		_ft_active       = true;
 
 	} else {
 		_gear.landing_gear = landing_gear_s::GEAR_DOWN;
+		_ft_active = false;
 	}
 
 	return ret;
@@ -115,6 +119,7 @@ bool FlightTaskTransition::update()
 
 	// back-transition = “in any transition” AND “not transitioning to FW” //
 	const bool back_transition = vs.in_transition_mode && !vs.in_transition_to_fw;
+	const bool front_transition = vs.in_transition_mode && vs.in_transition_to_fw;
 
 	if (back_transition) {
 
@@ -142,13 +147,38 @@ bool FlightTaskTransition::update()
 
 
 	} else {
-		// All other phases: gently decay to zero vertical speed
-		_velocity_setpoint(2) = _vel_z_filter.update(0.0f, _deltatime);
-	          // print only first time we enter this path
-                PX4_INFO("1.this will execute during front transition or if B_transition custom fails  ‒ vertical speed damped, v_sp = [%.2f  %.2f  %.2f]",
-		(double)_velocity_setpoint(0),
-		(double)_velocity_setpoint(1),
-		(double)_velocity_setpoint(2));
+
+		if (front_transition) {
+
+			// ─── 0. elapsed timer ──────────────────────────────
+			_ft_elapsed_time += _deltatime;
+			const float T = fmaxf(_param_vt_f_trans_dur, 0.1f);   // safety
+
+			// ─── 1. speed deficit → height we WANT to gain ─────
+			const float v_xy  = Vector2f(_velocity).norm();       // m/s
+			const float v_tgt = 22.0f;                             // hand‑off speed
+			const float dv_sq = math::max(v_tgt * v_tgt - v_xy * v_xy, 0.f);
+
+			const float h_gain = 0.80f * dv_sq / (2.f * CONSTANTS_ONE_G); // metres PE to add
+
+			// ─── 2. command climb‑rate proportional to h_gain ──
+			float vz_sp = - h_gain / T;       // negative Z = climb
+			vz_sp = math::max(vz_sp, -9.0f);  // cap climb to 2 m/s up
+
+			_velocity_setpoint(2) = _vel_z_filter.update(vz_sp, _deltatime);
+
+		} else {   // not front‑transition
+			_ft_active = false;
+			_velocity_setpoint(2) = _vel_z_filter.update(0.0f, _deltatime);
+		}
+
+		// // All other phases: gently decay to zero vertical speed
+		// _velocity_setpoint(2) = _vel_z_filter.update(0.0f, _deltatime);
+	        //   // print only first time we enter this path
+                // PX4_INFO("1.this will execute during front transition or if B_transition custom fails- vertical speed damped, v_sp = [%.2f  %.2f  %.2f]",
+		// (double)_velocity_setpoint(0),
+		// (double)_velocity_setpoint(1),
+		// (double)_velocity_setpoint(2));
 	//!!!! LOG ADD FAILSAFEE ACTIVATE AND LOG VELOCITY SETPOINT
 	}
 	////////////////

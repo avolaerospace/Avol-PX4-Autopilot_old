@@ -70,9 +70,13 @@ private:
 	float _param_fw_psp_off{0.f};
 	float _param_vt_b_dec_i{0.f};
 	float _param_vt_b_dec_mss{0.f};
+	float _param_vt_f_trans_dur{2.0f};
 
 	AlphaFilter<float> _vel_z_filter{VERTICAL_VELOCITY_TIME_CONSTANT};
 	float _decel_error_bt_int{0.f}; ///< Backtransition deceleration error integrator value
 
 	float computeBackTranstionPitchSetpoint();
+
+	float _ft_elapsed_time{0.f};   ///< seconds since front‑transition start
+	bool  _ft_active{false};       ///< true while in MC→FW transition
 };

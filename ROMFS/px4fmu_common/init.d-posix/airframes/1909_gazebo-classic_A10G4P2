@@ -86,6 +86,7 @@ param set-default CA_SV_CS_COUNT 2
 param set-default CA_SV_CS0_TRQ_Y 0.5
 param set-default CA_SV_CS0_TRQ_P -0.5
 param set-default CA_SV_CS0_TYPE 5
+
 param set-default CA_SV_CS1_TRQ_Y -0.5
 param set-default CA_SV_CS1_TRQ_P -0.5
 param set-default CA_SV_CS1_TYPE 6
@@ -109,37 +110,81 @@ param set-default PWM_MAIN_FUNC8 202
 # param set-default PWM_MAIN_MIN8 1400 ## ADDED Aug26
 # param set-default PWM_MAIN_MAX8 1600 ## ADDED Aug26
 parm set-default FD_FAIL_R 70
-#param set-default FW_P_TC 0.4 ####s#####
+
+####################################
 #pitch
-param set-default FW_PR_FF 0.8 # 0.1
-param set-default FW_PR_P 0.1 # 1.2
-param set-default FW_PR_I 0.01 # 0.3
-param set-default FW_PR_D 0
+param set-default FW_PN_R_SLEW_MAX	30.000000000000000000
+param set-default FW_POS_STK_CONF	2
+
+param set-default FW_PR_FF	0.105566322803497314
+param set-default FW_PR_P	0.118343442678451538
+param set-default FW_PR_I	0.121373407542705536
+param set-default FW_PR_D	0.000000000000000000
+param set-default FW_PR_IMAX	0.400000005960464478
+
+param set-default FW_PSP_OFF	3.500000000000000000
+param set-default FW_P_LIM_MAX	3.000000000000000000
+param set-default FW_P_LIM_MIN	-3.000000000000000000
+param set-default FW_P_RMAX_NEG	60.000000000000000000
+param set-default FW_P_RMAX_POS	60.000000000000000000
+param set-default FW_P_TC	0.234477758407592773
+####################################
 # roll
-param set-default FW_RR_FF 0.8 # 0.1  0.8
-param set-default FW_RR_P 0.1 # 0.25 ######### 2.7
-param set-default FW_RR_I 0.01 # 0.8
-param set-default FW_RR_D 0 #########
-param set-default FW_R_RMAX 50 ##?????????? ---> 50
+param set-default FW_RLL_TO_YAW_FF	0.000000000000000000
+
+param set-default FW_RR_FF	0.098286420106887817
+param set-default FW_RR_P	0.120676390826702118
+param set-default FW_RR_I	0.121602661907672882
+param set-default FW_RR_D	0.000000000000000000
+param set-default FW_RR_IMAX	0.200000002980232239
+
+param set-default FW_R_LIM	50.000000000000000000
+param set-default FW_R_RMAX	50.000000000000000000
+param set-default FW_R_TC	0.229297325015068054
+####################################
 #yaw
-param set-default FW_YR_FF 0.0 # 0 make yaw rate controller very weak, only keep default P#############
-#param set-default FW_YR_P 0.5 #0.15 ###########
-param set-default FW_YR_I 0.1
-param set-default FW_YR_D 0
-param set-default FW_Y_RMAX 50
+param set-default FW_YR_FF	0.200000002980232239
+param set-default FW_YR_P	0.050000000745058060
+param set-default FW_YR_I	0.100000001490116119
+param set-default FW_YR_D	0.000000000000000000
+param set-default FW_YR_IMAX	0.200000002980232239
+param set-default FW_Y_RMAX	50.000000000000000000
 
-param set-default FW_PSP_OFF 1.5
 
-param set-default FW_THR_MAX 1 # 1
+
+
+param set-default FW_THR_MAX 0.6 # 1
 #param set-default FW_THR_MIN 0.2 ###########
-param set-default FW_T_CLMB_MAX 5
-param set-default FW_T_HRATE_FF 0.3
-param set-default FW_T_SINK_MAX 3
-param set-default FW_T_SINK_MIN 2
+
+param set-default FW_T_ALT_TC       5.000
+param set-default FW_T_CLMB_MAX     5.000
+param set-default FW_T_CLMB_R_SP    3.000
+param set-default FW_T_HRATE_FF     0.300
+param set-default FW_T_I_GAIN_PIT   0.100
+param set-default FW_T_PTCH_DAMP    0.100
+param set-default FW_T_RLL2THR      15.000
+param set-default FW_T_SEB_R_FF     1.000
+param set-default FW_T_SINK_MAX     3.000
+param set-default FW_T_SINK_MIN     2.000
+param set-default FW_T_SINK_R_SP    2.000
+param set-default FW_T_SPDWEIGHT    1.000
+param set-default FW_T_SPD_DEV_STD  0.200
+param set-default FW_T_SPD_PRC_STD  0.200
+param set-default FW_T_SPD_STD      0.200
+param set-default FW_T_STE_R_TC     0.400
+param set-default FW_T_TAS_TC       5.000
+param set-default FW_T_THR_DAMPING  0.050
+param set-default FW_T_THR_INTEG    0.020
+param set-default FW_T_VERT_ACC     7.000
+
+
 param set-default FW_AIRSPD_STALL 20 #########
 param set-default FW_AIRSPD_MIN 24
-param set-default FW_AIRSPD_TRIM 38 #########
+param set-default FW_AIRSPD_TRIM 30 #########
 param set-default FW_AIRSPD_MAX 33
+
+param set-default FW_T_CLMB_R_SP
+
 param set-default MC_AIRMODE 0
 param set-default MAN_ARM_GESTURE 0.3 # required for yaw airmode
 param set-default MC_ROLL_P 3
@@ -153,11 +198,10 @@ param set-default VT_TYPE 0
 param set-default WV_EN 0
 param set-default FW_WING_SPAN 1.5
 param set-default FW_R_LIM 50
-param set-default FW_THR_TRIM 0.10 ####
-param set-default FW_THR_ASPD_MIN 0.1
+# param set-default FW_THR_TRIM 0.15 ####
+param set-default FW_THR_ASPD_MIN 0
 
 
-param set-default FW_T_RLL2THR 10
 # This is a test from August 5th. Matching real data values with sim
 # parameters in order to find a golden center for control
 
@@ -180,53 +224,82 @@ param set-default EKF2_WIND_NSD 0.01
 # # N/A param set-default EV_TSK_RC_LOSS
 # # N/A param set-default EV_TSK_STAT_DIS
 
-# param set-default FW_AIRSPD_STALL 15
-# param set-default FW_AIRSPD_TRIM 20
 # # N/A param set-default FW_ARSP_MODE
 param set-default FW_GND_SPD_MIN 5
 param set-default FW_MAN_P_MAX 20
 param set-default FW_MAN_R_MAX 45
-param set-default FW_PN_R_SLEW_MAX 30 ######## ????
-param set-default FW_P_LIM_MAX 20
-param set-default FW_P_LIM_MIN -20
-param set-default FW_P_TC 0.6
+# param set-default FW_PN_R_SLEW_MAX 30 ######## ????
+# param set-default FW_P_LIM_MAX 20
+# param set-default FW_P_LIM_MIN -20
+# param set-default FW_P_TC 0.6
 #param set-default FW_RR_D 0.15 # 0.005
-param set-default FW_RR_IMAX 0.2
+# param set-default FW_RR_IMAX 0.2
 #param set-default FW_RR_P 5.1 # 0.05
 
  ##
 param set-default FW_THR_MIN 0.2
 param set-default FW_THR_TRIM 0.44
 param set-default FW_WR_IMAX 0.4 #what is it
-param set-default FW_YR_FF 0.2 # 0.2
+# param set-default FW_YR_FF 0.2 # 0.2
 #param set-default FW_YR_P 0.5
-param set-default VT_ARSP_BLEND 8
-# # N/A param set-default VT_B_DEC_FF
-param set-default VT_B_DEC_MSS 2
-param set-default VT_B_TRANS_DUR 9
-param set-default VT_FW_DIFTHR_EN 1
+# param set-default VT_ARSP_BLEND 8
+# # # N/A param set-default VT_B_DEC_FF
+# param set-default VT_B_DEC_MSS 3
 
-param set-default VT_FW_DIFTHR_S_R 0 ## ROLL... TURNING DOWN. Was 1
-param set-default VT_FW_DIFTHR_S_P 0
-param set-default VT_FW_DIFTHR_S_Y 1
+# param set-default VT_B_TRANS_DUR 9
+# param set-default VT_FW_DIFTHR_EN 5
 
-param set-default VT_F_TRANS_DUR 8
-param set-default VT_TRANS_MIN_TM 2
-param set-default VT_ELEV_MC_LOCK 0
+# param set-default VT_FW_DIFTHR_S_R 0 ## ROLL... TURNING DOWN. Was 1
+# param set-default VT_FW_DIFTHR_S_P 0
+# param set-default VT_FW_DIFTHR_S_Y 1
+
+# param set-default VT_F_TRANS_DUR 8
+# param set-default VT_TRANS_MIN_TM 2
+# param set-default VT_ELEV_MC_LOCK 0
+
+param set-default VT_ARSP_BLEND    8.000
+param set-default VT_ARSP_TRANS    23.000
+param set-default VT_B_DEC_I       0.080
+param set-default VT_B_DEC_MSS     3.000
+param set-default VT_B_TRANS_DUR   9.000
+param set-default VT_ELEV_MC_LOCK  0.000
+param set-default VT_FWD_THRUST_EN 0.000
+param set-default VT_FWD_THRUST_SC 0.700
+param set-default VT_FW_DIFTHR_EN  5.000
+param set-default VT_FW_DIFTHR_S_P 0.400
+param set-default VT_FW_DIFTHR_S_R 0.000
+param set-default VT_FW_DIFTHR_S_Y 0.500
+param set-default VT_FW_MIN_ALT    0.000
+param set-default VT_FW_QC_HMAX    0.000
+param set-default VT_FW_QC_P       0.000
+param set-default VT_FW_QC_R       0.000
+param set-default VT_F_TRANS_DUR   5.000
+param set-default VT_F_TRANS_THR   0.900
+param set-default VT_F_TR_OL_TM    6.000
+param set-default VT_LND_PITCH_MIN -5.000
+param set-default VT_PITCH_MIN     -5.000
+param set-default VT_QC_ALT_LOSS   0.000
+param set-default VT_QC_T_ALT_LOSS 20.000
+param set-default VT_SPOILER_MC_LD 0.000
+param set-default VT_TRANS_MIN_TM  2.000
+param set-default VT_TRANS_TIMEOUT 15.000
+param set-default VT_TYPE          0.000
+
+
 param set-default WEIGHT_BASE 8.7
 param set-default WEIGHT_GROSS 8.7
-param set-default WV_EN 0
+param set-default WV_EN 1
 
 param set-default FW_THR_SLEW_MAX 0.5 ####### ???????
 param set-default FW_WR_P 0.5
 
 #NPFG v1.16
-param set-default NPFG_DAMPING 0.75
+param set-default NPFG_DAMPING 0.82
 param set-default NPFG_LB_PERIOD 1
 param set-default NAV_ACC_RAD 10
 param set-default NPFG_PERIOD 21
 param set-default NPFG_PERIOD_SF 1.5
-param set-default NPFG_ROLL_TC 0.8
+param set-default NPFG_ROLL_TC 0.5
 param set-default NPFG_SW_DST_MLT 0.32
 
 # param set-default NAV_FW_ALT_RAD 100
@@ -235,8 +308,8 @@ param set-default NPFG_SW_DST_MLT 0.32
 
 #param set-default NPFG_ROLL_TC 0.9
 # -t 192.168.64.1 -f into PX4-Autopilot/build/px4_sitl_default/etc/init.d-posix/px4-rc.mavlink
-param set-default VT_F_TRANS_THR 0.7
-param set-default VT_TRANS_TIMEOUT 15
+# param set-default VT_F_TRANS_THR 0.7
+# param set-default VT_TRANS_TIMEOUT 15
 
 param set-default MPC_THR_MIN 0.12
 param set-default MPC_THR_MAX 1
